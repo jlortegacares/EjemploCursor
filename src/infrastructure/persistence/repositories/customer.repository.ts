@@ -1,81 +1,60 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import { CreateCustomerDto, UpdateCustomerDto } from '@infrastructure/controllers/dtos/customer.dto';
-import { Customer } from '@domain/entities/customer.entity';
-
-import { CustomerEntity } from '../entities/customer.entity';
+import { Customer as CustomerEntity } from '@domain/entities/customer.entity';
+import { CustomerDocument } from '../schemas/customer.schema';
 
 @Injectable()
 export class CustomerRepository {
   constructor(
-    @InjectRepository(CustomerEntity)
-    private readonly repository: Repository<CustomerEntity>,
+    @InjectModel('Customer')
+    private readonly customerModel: Model<CustomerDocument>,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    const customerEntity = this.repository.create({
-      name: createCustomerDto.name,
-      email: createCustomerDto.email,
-      phoneNumber: createCustomerDto.phoneNumber,
-      address: createCustomerDto.address,
-    });
-
-    const savedEntity = await this.repository.save(customerEntity);
+  async create(createCustomerDto: CreateCustomerDto): Promise<CustomerEntity> {
+    const createdCustomer = new this.customerModel(createCustomerDto);
+    const savedEntity = await createdCustomer.save();
     return this.toDomain(savedEntity);
   }
 
-  async findAll(): Promise<Customer[]> {
-    const entities = await this.repository.find();
-    return entities.map(entity => this.toDomain(entity));
+  async findAll(): Promise<CustomerEntity[]> {
+    const docs = await this.customerModel.find().exec();
+    return docs.map(doc => this.toDomain(doc));
   }
 
-  async findOne(id: string): Promise<Customer> {
-    const entity = await this.repository.findOne({ where: { id } });
-    if (!entity) {
+  async findOne(id: string): Promise<CustomerEntity> {
+    const doc = await this.customerModel.findById(id).exec();
+    if (!doc) {
       throw new Error('Customer not found');
     }
-    return this.toDomain(entity);
+    return this.toDomain(doc);
   }
 
-  async update(id: string, updateCustomerDto: UpdateCustomerDto): Promise<Customer> {
-    const entity = await this.repository.findOne({ where: { id } });
-    if (!entity) {
+  async update(id: string, updateCustomerDto: UpdateCustomerDto): Promise<CustomerEntity> {
+    const updatedDoc = await this.customerModel.findByIdAndUpdate(id, updateCustomerDto, { new: true }).exec();
+    if (!updatedDoc) {
       throw new Error('Customer not found');
     }
-
-    if (updateCustomerDto.name) {
-      entity.name = updateCustomerDto.name;
-    }
-    if (updateCustomerDto.email) {
-      entity.email = updateCustomerDto.email;
-    }
-    if (updateCustomerDto.phoneNumber) {
-      entity.phoneNumber = updateCustomerDto.phoneNumber;
-    }
-    if (updateCustomerDto.address) {
-      entity.address = updateCustomerDto.address;
-    }
-
-    const updatedEntity = await this.repository.save(entity);
-    return this.toDomain(updatedEntity);
+    return this.toDomain(updatedDoc);
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.repository.delete(id);
-    if (result.affected === 0) {
+    const result = await this.customerModel.findByIdAndDelete(id).exec();
+    if (!result) {
       throw new Error('Customer not found');
     }
   }
 
-  private toDomain(entity: CustomerEntity): Customer {
-    return Customer.create(
-      entity.id,
-      entity.name,
-      entity.email,
-      entity.phoneNumber,
-      entity.address,
+  private toDomain(doc: CustomerDocument): CustomerEntity {
+    // Mapping from Mongoose document to domain entity; assumes CustomerEntity.create exists
+    return CustomerEntity.create(
+      doc._id,
+      doc.name,
+      doc.email,
+      doc.phoneNumber,
+      doc.address
     );
   }
 }

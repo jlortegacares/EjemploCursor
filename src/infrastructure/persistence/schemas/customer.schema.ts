@@ -32,4 +32,6 @@ export class Customer extends Document {
   };
 }
 
-export const CustomerSchema = SchemaFactory.createForClass(Customer); 
+export const CustomerSchema = SchemaFactory.createForClass(Customer);
+
+export type CustomerDocument = Customer & Document; 
