@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CustomerEntity } from '../entities/customer.entity';
-import { Customer } from '@domain/entities/customer.entity';
+
 import { CreateCustomerDto, UpdateCustomerDto } from '@application/dtos/customer.dto';
+import { Customer } from '@domain/entities/customer.entity';
+
+import { CustomerEntity } from '../entities/customer.entity';
 
 @Injectable()
 export class CustomerRepository {
@@ -76,4 +78,4 @@ export class CustomerRepository {
       entity.address,
     );
   }
-} 
+}

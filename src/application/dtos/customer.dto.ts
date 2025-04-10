@@ -1,11 +1,11 @@
-import { IsString, IsEmail, IsNotEmpty, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsString, IsEmail, IsNotEmpty, ValidateNested } from 'class-validator';
 
 export class AddressDto {
   @ApiProperty({
     description: 'Calle del cliente',
-    example: 'Av. Principal 123'
+    example: 'Av. Principal 123',
   })
   @IsString()
   @IsNotEmpty()
@@ -13,7 +13,7 @@ export class AddressDto {
 
   @ApiProperty({
     description: 'Ciudad del cliente',
-    example: 'Ciudad de México'
+    example: 'Ciudad de México',
   })
   @IsString()
   @IsNotEmpty()
@@ -21,7 +21,7 @@ export class AddressDto {
 
   @ApiProperty({
     description: 'Estado del cliente',
-    example: 'CDMX'
+    example: 'CDMX',
   })
   @IsString()
   @IsNotEmpty()
@@ -29,7 +29,7 @@ export class AddressDto {
 
   @ApiProperty({
     description: 'Código postal del cliente',
-    example: '12345'
+    example: '12345',
   })
   @IsString()
   @IsNotEmpty()
@@ -37,7 +37,7 @@ export class AddressDto {
 
   @ApiProperty({
     description: 'País del cliente',
-    example: 'México'
+    example: 'México',
   })
   @IsString()
   @IsNotEmpty()
@@ -47,7 +47,7 @@ export class AddressDto {
 export class CreateCustomerDto {
   @ApiProperty({
     description: 'Nombre completo del cliente',
-    example: 'Juan Pérez'
+    example: 'Juan Pérez',
   })
   @IsString()
   @IsNotEmpty()
@@ -55,14 +55,14 @@ export class CreateCustomerDto {
 
   @ApiProperty({
     description: 'Correo electrónico del cliente',
-    example: 'juan.perez@example.com'
+    example: 'juan.perez@example.com',
   })
   @IsEmail()
   email: string;
 
   @ApiProperty({
     description: 'Número de teléfono del cliente',
-    example: '+52 55 1234 5678'
+    example: '+52 55 1234 5678',
   })
   @IsString()
   @IsNotEmpty()
@@ -70,7 +70,7 @@ export class CreateCustomerDto {
 
   @ApiProperty({
     description: 'Dirección del cliente',
-    type: AddressDto
+    type: AddressDto,
   })
   @ValidateNested()
   @Type(() => AddressDto)
@@ -81,7 +81,7 @@ export class UpdateCustomerDto {
   @ApiProperty({
     description: 'Nombre completo del cliente',
     example: 'Juan Pérez',
-    required: false
+    required: false,
   })
   @IsString()
   @IsNotEmpty()
@@ -90,7 +90,7 @@ export class UpdateCustomerDto {
   @ApiProperty({
     description: 'Correo electrónico del cliente',
     example: 'juan.perez@example.com',
-    required: false
+    required: false,
   })
   @IsEmail()
   email?: string;
@@ -98,7 +98,7 @@ export class UpdateCustomerDto {
   @ApiProperty({
     description: 'Número de teléfono del cliente',
     example: '+52 55 1234 5678',
-    required: false
+    required: false,
   })
   @IsString()
   @IsNotEmpty()
@@ -107,9 +107,9 @@ export class UpdateCustomerDto {
   @ApiProperty({
     description: 'Dirección del cliente',
     type: AddressDto,
-    required: false
+    required: false,
   })
   @ValidateNested()
   @Type(() => AddressDto)
   address?: AddressDto;
-} 
+}

@@ -1,7 +1,8 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
-import { OrderService } from '../services/order.service';
+
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
+import { OrderService } from '../services/order.service';
 
 /**
  * Controller for handling order-related operations
@@ -47,10 +48,7 @@ export class OrderController {
    * @returns The updated order
    */
   @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateOrderDto: UpdateOrderDto,
-  ) {
+  async update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.orderService.update(id, updateOrderDto);
   }
 
@@ -63,4 +61,4 @@ export class OrderController {
   async remove(@Param('id') id: string) {
     return this.orderService.remove(id);
   }
-} 
+}

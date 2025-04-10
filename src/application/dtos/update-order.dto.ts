@@ -45,4 +45,4 @@ export class UpdateOrderDto {
   @IsString()
   @IsOptional()
   shippingAddress?: string;
-} 
+}

@@ -34,4 +34,4 @@ export class CustomerEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-} 
+}

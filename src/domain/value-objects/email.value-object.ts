@@ -20,4 +20,4 @@ export class Email {
   public getValue(): string {
     return this.value;
   }
-} 
+}

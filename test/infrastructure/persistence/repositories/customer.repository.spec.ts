@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CustomerRepository } from '@infrastructure/persistence/repositories/customer.repository';
-import { CustomerEntity } from '@infrastructure/persistence/entities/customer.entity';
+
 import { CreateCustomerDto, UpdateCustomerDto } from '@application/dtos/customer.dto';
 import { Customer } from '@domain/entities/customer.entity';
+import { CustomerEntity } from '@infrastructure/persistence/entities/customer.entity';
+import { CustomerRepository } from '@infrastructure/persistence/repositories/customer.repository';
 
 describe('CustomerRepository', () => {
   let repository: CustomerRepository;
@@ -68,7 +69,7 @@ describe('CustomerRepository', () => {
         customerEntity.name,
         customerEntity.email,
         customerEntity.phoneNumber,
-        customerEntity.address
+        customerEntity.address,
       );
 
       mockTypeOrmRepository.create.mockReturnValue(customerEntity);
@@ -105,14 +106,8 @@ describe('CustomerRepository', () => {
         },
       ];
 
-      const customers = customerEntities.map(entity => 
-        Customer.create(
-          entity.id,
-          entity.name,
-          entity.email,
-          entity.phoneNumber,
-          entity.address
-        )
+      const customers = customerEntities.map(entity =>
+        Customer.create(entity.id, entity.name, entity.email, entity.phoneNumber, entity.address),
       );
 
       mockTypeOrmRepository.find.mockResolvedValue(customerEntities);
@@ -147,7 +142,7 @@ describe('CustomerRepository', () => {
         customerEntity.name,
         customerEntity.email,
         customerEntity.phoneNumber,
-        customerEntity.address
+        customerEntity.address,
       );
 
       mockTypeOrmRepository.findOne.mockResolvedValue(customerEntity);
@@ -186,10 +181,8 @@ describe('CustomerRepository', () => {
         name: updateCustomerDto.name,
       };
 
-      mockTypeOrmRepository.findOne
-        .mockResolvedValueOnce(existingCustomerEntity);
-      mockTypeOrmRepository.save
-        .mockResolvedValueOnce(updatedCustomerEntity);
+      mockTypeOrmRepository.findOne.mockResolvedValueOnce(existingCustomerEntity);
+      mockTypeOrmRepository.save.mockResolvedValueOnce(updatedCustomerEntity);
 
       const result = await repository.update(customerId, updateCustomerDto);
 
@@ -214,4 +207,4 @@ describe('CustomerRepository', () => {
       expect(typeOrmRepository.delete).toHaveBeenCalledWith(customerId);
     });
   });
-}); 
+});

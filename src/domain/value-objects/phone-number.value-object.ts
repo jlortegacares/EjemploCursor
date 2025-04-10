@@ -20,4 +20,4 @@ export class PhoneNumber {
   public getValue(): string {
     return this.value;
   }
-} 
+}

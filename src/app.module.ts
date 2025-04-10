@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CustomerController } from './infrastructure/controllers/customer.controller';
-import { CustomerService } from './application/services/customer.service';
+
 import { ApplicationModule } from './application/application.module';
+import { CustomerService } from './application/services/customer.service';
+import { CustomerController } from './infrastructure/controllers/customer.controller';
 import { PersistenceModule } from './infrastructure/persistence/persistence.module';
 
 @Module({

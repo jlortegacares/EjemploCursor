@@ -4,7 +4,7 @@ export class Address {
     private readonly city: string,
     private readonly state: string,
     private readonly zipCode: string,
-    private readonly country: string
+    private readonly country: string,
   ) {
     this.validateAddress();
   }
@@ -20,8 +20,8 @@ export class Address {
     city: string,
     state: string,
     zipCode: string,
-    country: string
+    country: string,
   ): Address {
     return new Address(street, city, state, zipCode, country);
   }
-} 
+}

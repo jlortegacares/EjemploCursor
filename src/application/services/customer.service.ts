@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
+
 import { Customer } from '@domain/entities/customer.entity';
 import { CustomerRepository } from '@infrastructure/persistence/repositories/customer.repository';
+
+import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
 
 @Injectable()
 export class CustomerService {
@@ -26,4 +28,4 @@ export class CustomerService {
   async remove(id: string): Promise<void> {
     await this.customerRepository.remove(id);
   }
-} 
+}

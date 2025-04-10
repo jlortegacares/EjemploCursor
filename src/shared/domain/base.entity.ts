@@ -4,4 +4,4 @@ export abstract class BaseEntity {
     public readonly createdAt: Date,
     public updatedAt: Date,
   ) {}
-} 
+}

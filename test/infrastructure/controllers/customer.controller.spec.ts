@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CustomerController } from '../../../src/infrastructure/controllers/customer.controller';
-import { CustomerService } from '../../../src/application/services/customer.service';
+
 import { CreateCustomerDto, UpdateCustomerDto } from '../../../src/application/dtos/customer.dto';
+import { CustomerService } from '../../../src/application/services/customer.service';
 import { Customer } from '../../../src/domain/entities/customer.entity';
+import { CustomerController } from '../../../src/infrastructure/controllers/customer.controller';
 
 describe('CustomerController', () => {
   let controller: CustomerController;
@@ -55,7 +56,7 @@ describe('CustomerController', () => {
         createCustomerDto.name,
         createCustomerDto.email,
         createCustomerDto.phoneNumber,
-        createCustomerDto.address
+        createCustomerDto.address,
       );
 
       mockService.create.mockResolvedValue(expectedCustomer);
@@ -70,19 +71,13 @@ describe('CustomerController', () => {
   describe('findAll', () => {
     it('should return all customers', async () => {
       const expectedCustomers = [
-        Customer.create(
-          '123',
-          'John Doe',
-          'john@example.com',
-          '+1234567890',
-          {
-            street: '123 Main St',
-            city: 'New York',
-            state: 'NY',
-            zipCode: '10001',
-            country: 'USA',
-          }
-        ),
+        Customer.create('123', 'John Doe', 'john@example.com', '+1234567890', {
+          street: '123 Main St',
+          city: 'New York',
+          state: 'NY',
+          zipCode: '10001',
+          country: 'USA',
+        }),
       ];
 
       mockService.findAll.mockResolvedValue(expectedCustomers);
@@ -108,7 +103,7 @@ describe('CustomerController', () => {
           state: 'NY',
           zipCode: '10001',
           country: 'USA',
-        }
+        },
       );
 
       mockService.findOne.mockResolvedValue(expectedCustomer);
@@ -138,7 +133,7 @@ describe('CustomerController', () => {
           state: 'NY',
           zipCode: '10001',
           country: 'USA',
-        }
+        },
       );
 
       mockService.update.mockResolvedValue(expectedCustomer);
@@ -159,4 +154,4 @@ describe('CustomerController', () => {
       expect(service.remove).toHaveBeenCalledWith(customerId);
     });
   });
-}); 
+});

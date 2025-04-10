@@ -1,6 +1,6 @@
+import { Address } from '../value-objects/address.value-object';
 import { Email } from '../value-objects/email.value-object';
 import { PhoneNumber } from '../value-objects/phone-number.value-object';
-import { Address } from '../value-objects/address.value-object';
 
 export class Customer {
   private constructor(
@@ -10,7 +10,7 @@ export class Customer {
     private phoneNumber: PhoneNumber,
     private address: Address,
     private readonly createdAt: Date,
-    private updatedAt: Date
+    private updatedAt: Date,
   ) {}
 
   public static create(
@@ -24,22 +24,16 @@ export class Customer {
       state: string;
       zipCode: string;
       country: string;
-    }
+    },
   ): Customer {
     return new Customer(
       id,
       name,
       Email.create(email),
       PhoneNumber.create(phoneNumber),
-      Address.create(
-        address.street,
-        address.city,
-        address.state,
-        address.zipCode,
-        address.country
-      ),
+      Address.create(address.street, address.city, address.state, address.zipCode, address.country),
       new Date(),
-      new Date()
+      new Date(),
     );
   }
 
@@ -84,4 +78,4 @@ export class Customer {
     this.address = address;
     this.updatedAt = new Date();
   }
-} 
+}
