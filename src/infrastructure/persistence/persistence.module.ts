@@ -1,25 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { CustomerEntity } from './entities/customer.entity';
 import { CustomerRepository } from './repositories/customer.repository';
+import { OrderRepository } from './repositories/order.repository';
+import { CustomerSchema } from './schemas/customer.schema';
+import { OrderSchema, OrderSchemaFactory } from './schemas/order.schema';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_DATABASE || 'customers_db',
-      entities: [CustomerEntity],
-      synchronize: process.env.NODE_ENV !== 'production',
-      logging: process.env.NODE_ENV === 'development',
-    }),
-    TypeOrmModule.forFeature([CustomerEntity]),
+    MongooseModule.forFeature([
+      { name: 'Customer', schema: CustomerSchema },
+      { name: 'Order', schema: OrderSchemaFactory },
+    ]),
   ],
-  providers: [CustomerRepository],
-  exports: [CustomerRepository],
+  providers: [CustomerRepository, OrderRepository],
+  exports: [CustomerRepository, OrderRepository],
 })
 export class PersistenceModule {}
