@@ -1,115 +1,50 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsString, IsEmail, IsNotEmpty, ValidateNested } from 'class-validator';
-
-export class AddressDto {
-  @ApiProperty({
-    description: 'Calle del cliente',
-    example: 'Av. Principal 123',
-  })
-  @IsString()
-  @IsNotEmpty()
-  street: string;
-
-  @ApiProperty({
-    description: 'Ciudad del cliente',
-    example: 'Ciudad de México',
-  })
-  @IsString()
-  @IsNotEmpty()
-  city: string;
-
-  @ApiProperty({
-    description: 'Estado del cliente',
-    example: 'CDMX',
-  })
-  @IsString()
-  @IsNotEmpty()
-  state: string;
-
-  @ApiProperty({
-    description: 'Código postal del cliente',
-    example: '12345',
-  })
-  @IsString()
-  @IsNotEmpty()
-  zipCode: string;
-
-  @ApiProperty({
-    description: 'País del cliente',
-    example: 'México',
-  })
-  @IsString()
-  @IsNotEmpty()
-  country: string;
-}
+import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, Length } from 'class-validator';
 
 export class CreateCustomerDto {
-  @ApiProperty({
-    description: 'Nombre completo del cliente',
-    example: 'Juan Pérez',
-  })
-  @IsString()
+  @ApiProperty({ description: 'Nombre del cliente', example: 'John Doe' })
   @IsNotEmpty()
+  @IsString()
+  @Length(2, 100)
   name: string;
 
-  @ApiProperty({
-    description: 'Correo electrónico del cliente',
-    example: 'juan.perez@example.com',
-  })
+  @ApiProperty({ description: 'Email del cliente', example: 'john@example.com' })
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
-  @ApiProperty({
-    description: 'Número de teléfono del cliente',
-    example: '+52 55 1234 5678',
-  })
-  @IsString()
+  @ApiProperty({ description: 'Teléfono del cliente', example: '+34600000000' })
   @IsNotEmpty()
-  phoneNumber: string;
+  @IsPhoneNumber()
+  phone: string;
 
-  @ApiProperty({
-    description: 'Dirección del cliente',
-    type: AddressDto,
-  })
-  @ValidateNested()
-  @Type(() => AddressDto)
-  address: AddressDto;
+  @ApiProperty({ description: 'Dirección del cliente', example: 'Calle Principal 123' })
+  @IsNotEmpty()
+  @IsString()
+  @Length(5, 200)
+  address: string;
 }
 
 export class UpdateCustomerDto {
-  @ApiProperty({
-    description: 'Nombre completo del cliente',
-    example: 'Juan Pérez',
-    required: false,
-  })
+  @ApiProperty({ description: 'Nombre del cliente', example: 'John Doe', required: false })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
+  @Length(2, 100)
   name?: string;
 
-  @ApiProperty({
-    description: 'Correo electrónico del cliente',
-    example: 'juan.perez@example.com',
-    required: false,
-  })
+  @ApiProperty({ description: 'Email del cliente', example: 'john@example.com', required: false })
+  @IsOptional()
   @IsEmail()
   email?: string;
 
-  @ApiProperty({
-    description: 'Número de teléfono del cliente',
-    example: '+52 55 1234 5678',
-    required: false,
-  })
-  @IsString()
-  @IsNotEmpty()
-  phoneNumber?: string;
+  @ApiProperty({ description: 'Teléfono del cliente', example: '+34600000000', required: false })
+  @IsOptional()
+  @IsPhoneNumber()
+  phone?: string;
 
-  @ApiProperty({
-    description: 'Dirección del cliente',
-    type: AddressDto,
-    required: false,
-  })
-  @ValidateNested()
-  @Type(() => AddressDto)
-  address?: AddressDto;
-}
+  @ApiProperty({ description: 'Dirección del cliente', example: 'Calle Principal 123', required: false })
+  @IsOptional()
+  @IsString()
+  @Length(5, 200)
+  address?: string;
+} 

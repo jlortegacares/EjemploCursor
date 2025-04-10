@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 
-import { CreateCustomerDto, UpdateCustomerDto } from '@application/dtos/customer.dto';
+import { CreateCustomerDto, UpdateCustomerDto } from '@infrastructure/controllers/dtos/customer.dto';
 import { CustomerService } from '@application/services/customer.service';
 import { Customer } from '@domain/entities/customer.entity';
 

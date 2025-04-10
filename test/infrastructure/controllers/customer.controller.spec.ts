@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { CreateCustomerDto, UpdateCustomerDto } from '../../../src/application/dtos/customer.dto';
+import { CreateCustomerDto, UpdateCustomerDto } from '../../../src/infrastructure/controllers/dtos/customer.dto';
 import { CustomerService } from '../../../src/application/services/customer.service';
 import { Customer } from '../../../src/domain/entities/customer.entity';
 import { CustomerController } from '../../../src/infrastructure/controllers/customer.controller';

@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 
-import { CreateOrderDto } from '../dtos/create-order.dto';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
-import { OrderService } from '../services/order.service';
+import { CreateOrderDto } from './dtos/create-order.dto';
+import { OrderService } from '@application/services/order.service';
+import { UpdateOrderDto } from './dtos/update-order.dto';
 
 /**
  * Controller for handling order-related operations

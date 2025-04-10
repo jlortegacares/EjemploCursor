@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateOrderDto } from '../dtos/create-order.dto';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
+import { CreateOrderDto } from '../../infrastructure/controllers/dtos/create-order.dto';
+import { UpdateOrderDto } from '../../infrastructure/controllers/dtos/update-order.dto';
 
 /**
  * Service responsible for handling order-related business logic

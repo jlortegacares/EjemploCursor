@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CreateCustomerDto, UpdateCustomerDto } from '@application/dtos/customer.dto';
+import { CreateCustomerDto, UpdateCustomerDto } from '@infrastructure/controllers/dtos/customer.dto';
 import { Customer } from '@domain/entities/customer.entity';
 import { CustomerEntity } from '@infrastructure/persistence/entities/customer.entity';
 import { CustomerRepository } from '@infrastructure/persistence/repositories/customer.repository';
