@@ -1,5 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, Length } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Length, ValidateNested } from 'class-validator';
+
+import { AddressDto } from '../../infrastructure/controllers/dtos/customer.dto';
 
 export class CreateCustomerDto {
   @ApiProperty({ description: 'Nombre del cliente', example: 'John Doe' })
@@ -13,16 +16,15 @@ export class CreateCustomerDto {
   @IsEmail()
   email: string;
 
-  @ApiProperty({ description: 'Teléfono del cliente', example: '+34600000000' })
-  @IsNotEmpty()
-  @IsPhoneNumber()
-  phone: string;
-
-  @ApiProperty({ description: 'Dirección del cliente', example: 'Calle Principal 123' })
+  @ApiProperty({ description: 'Número de teléfono del cliente', example: '+34600000000' })
   @IsNotEmpty()
   @IsString()
-  @Length(5, 200)
-  address: string;
+  phoneNumber: string;
+
+  @ApiProperty({ description: 'Dirección del cliente', type: AddressDto })
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address: AddressDto;
 }
 
 export class UpdateCustomerDto {
@@ -37,14 +39,21 @@ export class UpdateCustomerDto {
   @IsEmail()
   email?: string;
 
-  @ApiProperty({ description: 'Teléfono del cliente', example: '+34600000000', required: false })
-  @IsOptional()
-  @IsPhoneNumber()
-  phone?: string;
-
-  @ApiProperty({ description: 'Dirección del cliente', example: 'Calle Principal 123', required: false })
+  @ApiProperty({
+    description: 'Número de teléfono del cliente',
+    example: '+34600000000',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  @Length(5, 200)
-  address?: string;
+  phoneNumber?: string;
+
+  @ApiProperty({
+    description: 'Dirección del cliente',
+    type: AddressDto,
+    required: false,
+  })
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address?: AddressDto;
 } 
